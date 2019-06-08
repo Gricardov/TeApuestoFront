@@ -1,3 +1,8 @@
+/*Lista Resultado*/
+.ajuste{
+  padding: 20px;
+}
+
 /*Modificación de la barrita*/
 
 .txt-mayuscula{
@@ -11,7 +16,7 @@
     width: 25px;
     height: 25px;
     }
- 
+
     /*Lazos de la tarjeta*/
 .ribbon {
     width: 220px;
@@ -77,11 +82,11 @@
       font-weight: bold;
       line-height: 2;
   }
-  
+
 /*Botón de agregar grupo*/
 .featured-btn-wrap-inline .btn-danger {
     float: left;
-    text-align: center; 
+    text-align: center;
     background: #ff3a6d;
     padding: 10px 20px;
     -webkit-transition: 0.3s;
@@ -97,7 +102,7 @@
     background: #f34e79;
     outline: none;
     -webkit-box-shadow: none;
-    box-shadow: none; 
+    box-shadow: none;
 }
 
 /*Contenedor de búsqueda*/
@@ -105,7 +110,7 @@
     float: right;
     width: 100%;
   }
-  
+
   .search-container input[type=text] {
 
     padding: 6px;
@@ -115,7 +120,7 @@
     float: right;
     width: 200px;
   }
-  
+
   #input-busqueda-apuesta{
     width: 200px;
 
@@ -131,7 +136,7 @@
     cursor: pointer;
     width: 40px;
   }
-  
+
   .search-container button:hover {
     background: #ccc;
   }
@@ -170,7 +175,7 @@
 .u-float-right {
     float: right;
   }
-  
+
   .u-flex-center {
     display: -webkit-flex;
     display: flex;
@@ -179,12 +184,12 @@
     -webkit-align-items: center;
     align-items: center;
   }
-  
+
   .subtle {
     color: #888;
     font-size: 12px;
   }
-  
+
 .card-media {
     border-radius: 2px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, .12);
@@ -193,11 +198,11 @@
     transition: all 300ms ease-out;
     width: 100%;
   }
-  
+
   .card-media:hover {
     box-shadow: 0 5px 14px rgba(0, 0, 0, .2);
   }
-  
+
   .card-media-object-container {
     background: none;
     float: left;
@@ -205,13 +210,13 @@
     width: 35%;
     position: relative;
   }
-  
+
   .card-media-object {
     background-position: center center;
     background-size: cover;
     height: 100%;
   }
-  
+
   .card-media-object:after {
     content: " ";
     display: block;
@@ -224,7 +229,7 @@
     transition: all 300ms ease-out;
     z-index: 0;
   }
-  
+
   .card-media:hover .card-media-object:after {
     background: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,0) 52%, rgba(0,0,0,0.4) 100%);
     background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0) 52%,rgba(0,0,0,0.4) 100%);
@@ -232,7 +237,7 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=0 );
     opacity: 1;
   }
-  
+
   .card-media-object-tag {
     background-color: #fff;
     border-radius: 2px;
@@ -241,7 +246,7 @@
     right: 10px;
     top: 10px;
   }
-  
+
   .card-media-object-social-list {
     bottom: 4px;
     left: 10px;
@@ -251,7 +256,7 @@
     position: absolute;
     z-index: 0;
   }
-  
+
   .card-media-object-social-list li {
     border-radius: 50%;
     display: inline-block;
@@ -263,12 +268,12 @@
     transition: all 300ms ease-out;
     width: 30px;
   }
-  
+
   .card-media:hover .card-media-object-social-list li {
     opacity: 1;
     transform: translateY(0);
   }
-  
+
   .card-media-object-social-list li:nth-child(1) {
     transition-delay: 0;
   }
@@ -278,7 +283,7 @@
   .card-media-object-social-list li:nth-child(3) {
     transition-delay: 150ms;
   }
-  
+
   .card-media-object-social-list-item-additional {
     border: 1px solid #fff;
     color: #fff;
@@ -295,38 +300,38 @@
     position: relative;
     width: 65%;
   }
-  
+
   .card-media-body-top {
     display: block;
   }
-  
+
   .card-media-body-top-icons {
     margin-top: -2px;
     opacity: 0;
     transition: all 300ms ease-out;
     transform: translateY(-5px);
   }
-  
+
   .card-media:hover .card-media-body-top-icons {
     opacity: 1;
     transform: translateY(0);
   }
-  
+
   .card-media-body-top-icons > svg {
     cursor: pointer;
     margin-left: 10px;
     transition: all 300ms ease-out;
   }
-  
+
   .card-media-body-top-icons > svg:hover {
     fill: #444;
   }
-  
+
   .card-media-body-heading {
     display: block;
     margin-top: 10px;
   }
-  
+
   .card-media-body-supporting-bottom {
     position: absolute;
     margin-top: 10px;
@@ -337,32 +342,32 @@
     transition: all 300ms ease-out;
     width: 100%;
   }
-  
+
   .card-media:hover .card-media-body-supporting-bottom {
     opacity: 0;
     transform: translateY(-8px);
   }
-  
+
   .card-media-body-supporting-bottom-text {
     display: inline-block;
   }
-  
+
   .card-media-body-supporting-bottom-reveal {
     opacity: 0;
     transform: translateY(8px);
     transition: all 300ms ease-out;
   }
-  
+
   .card-media:hover .card-media-body-supporting-bottom-reveal {
     opacity: 1;
     transform: translateY(0);
   }
-  
+
   .card-media-link {
     color: #41C1F2;
     text-decoration: none;
   }
-  
+
   /*Tarjetas de apuestas y grupos*/
   /****************  GENERIC ***********/
 i {color:#bfbdb3;padding-right:10px;}
@@ -392,19 +397,19 @@ a:hover {text-decoration:none;}
     overflow: hidden;
 }
 .img-apuesta{
-    max-width:100%; 
+    max-width:100%;
     height:100%;
 }
 /****************  BORDER ***********/
 .out-border {border:1px solid #e2e2e2;border-radius:10px 10px;}
 
-  
+
 
 /**/
 .main-block-inicio-apostador {
-    padding: 160px 10px; 
+    padding: 160px 10px;
 }
-    
+
 
 .md-tabs {
   font-size: 16px;
@@ -413,7 +418,7 @@ a:hover {text-decoration:none;}
   flex-wrap: wrap;
   padding-left: 0;
   margin-bottom: 0;
-  
+
 }
 .md-tabs li a {
   color: #fff;
@@ -470,11 +475,11 @@ section h1 {
 @media(max-width: 992px){
     #input-busqueda-apuesta{
         width: 150px;
-    
+
       }
   }
   @media (max-width: 768px){
-    
+
     .search-container input[type=text] {
         width: 90%;
 

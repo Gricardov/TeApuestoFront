@@ -57,16 +57,11 @@
 							<div class="row justify-content-end navbar-collapse collapse"
 								id="navDatosUsuario">
 								<ul class="nav navbar-nav">
-									<li class="ml-2 nav-item">
-									
-									<img
-											class="img-barra-usuario mr-2" alt="img-barra-usuario"
-											src="images/incognito.jpg">
-									<a class="nav-link"
+									<li class="ml-2 nav-item"><img
+										class="img-barra-usuario mr-2" alt="img-barra-usuario"
+										src="images/incognito.jpg"> <a class="nav-link"
 										id="linkDatosUsuario" aria-current="false" href="#"> Nadie
-									</a>
-									
-									</li>
+									</a></li>
 									<li class="ml-2 nav-item"><a class="nav-link"
 										aria-current="false" href="#">S/. 69.00</a></li>
 									<li class="nav-item dropdown d-none d-lg-block"><a
@@ -104,7 +99,11 @@
 					<li><a class="text-center" href="#">Grupos <span
 							class="badge badge-pill badge-danger ml-2">3</span>
 					</a></li>
-					<li><a class="text-center" href="#">Resultados </a></li>
+					<li><a class="text-center" href="#">Fixtures<span
+							class="badge badge-pill badge-danger ml-2">6</a></li>
+					<li><a class="text-center" href="#">Resultados <span
+							class="badge badge-pill badge-danger ml-2">4</span>
+					</a></li>
 				</ul>
 
 			</div>
@@ -801,8 +800,101 @@
 
 						</div>
 						<div id="content-tab4">
-							<p>A trabajar! :33</p>
+							<div class="row align-items-center mb-5">
+								<div class="col-12 col-md-6">
+									<p id="txtEncabezado" class="text-muted align-middle">
+										Fixtures del Torneo</p>
+								</div>
+								<div class="col-12 col-md-6">
+									<div class="search-container">
+										<form action="#">
+											<button type="submit">
+												<i class="fa fa-search"></i>
+											</button>
+											<input type="text" class="busqueda" placeholder="Buscar..."
+												name="search">
+										</form>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-12">
+
+									<div class="card-title col-12 col-md-11 mt-2">
+										<h4 class="text-justify">Copa Aguila 2016</h4>
+
+										<div class="card">
+											<div>
+												<img src="images/Fixture-Aguila.jpg" width="1000px"
+													height="300px">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-12">
+										<ul class="list-inline">
+											<li><i class="fa fa-user"></i>Creado por: Andrea Loedrin</li>
+
+											<li><i class="fa fa-calendar"></i>Evento: Mundial Qatar
+												2022</li>
+											<li><i class="fa fa-gavel"></i>Apuestas: Perú vs Chile</li>
+											<li><i class="fa fa-users"></i>3,161 apostadores</li>
+										</ul>
+									</div>
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-6 text-center">
+										<a href="#"> <i class="fa fa-info"></i> <a href="#"
+											class="txt-mayuscula">Detalles</a>
+										</a>
+										</li>
+									</div>
+
+									<div class="col-6 text-center">
+
+										<i class="fa fa-heart"></i> <a href="#" class="txt-mayuscula">Unirse</a>
+									</div>
+								</div>
+							</div>
+
+
 						</div>
+						  <div id="content-tab4">
+                                <div class="row align-items-center mb-5">
+                                    <div class="col-12 col-md-6">
+                                        <p id="txtEncabezado" class="text-muted align-middle">
+                                          Resultado del Torneo
+                                        </p>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="search-container">
+                                            <form action="#">
+                                                <button type="submit"><i class="fa fa-search"></i></button>
+                                                <input type="text" class="busqueda" placeholder="Buscar..." name="search">
+                                            </form>
+                                        </div>
+                                    </div>
+                                      <div class="card-title col-12 col-md-11 mt-2">
+                              
+						 <div class="card">
+                                  <ul class="list-inline">
+                                      <li class="ajuste">Apuestas Ganadas:</li><br>
+
+                                      <li class="ajuste">Dinero Obtenido:
+                                      </li ><br>
+                                      <li class="ajuste">% de Aciertos:</li><br>
+                                      <li class="ajuste">Ultima Apuesta ganada:</li>
+                                  </ul>
+                                </div>
+                                </div>
+                                </div>                                
+                               
+                              </div>
+                            
+
 					</div>
 				</div>
 			</div>
@@ -888,19 +980,19 @@
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="slick-1.8.1/slick/slick.min.js"></script>
 	<script>
-        
+
 		// Primero, mostrar los datos del usuario
-		
+
 		let usuario=JSON.parse(obtenerGalleta("usuario"));
-		
+
 		if (usuario){
 			$('#linkDatosUsuario').text(usuario.nombre+" "+usuario.apPaterno);
-			
+
 		} else {
     		window.location.replace("index.html");
 
 		}
-		
+
         // Para las pestañas de la barra
         $('.md-tabs').slick({
             centerPadding: '60px',
@@ -955,7 +1047,7 @@
         });
 
  // Para las galletas
-        
+
         function guardarGalleta(name,value,days) {
             var expires = "";
             if (days) {
@@ -965,7 +1057,7 @@
             }
             document.cookie = name + "=" + (value || "")  + expires + "; path=/";
         }
-        
+
         function obtenerGalleta(name) {
             var nameEQ = name + "=";
             var ca = document.cookie.split(';');
@@ -976,8 +1068,8 @@
             }
             return null;
         }
-        function borrarGalleta(name) {   
-            document.cookie = name+'=; Max-Age=-99999999;';  
+        function borrarGalleta(name) {
+            document.cookie = name+'=; Max-Age=-99999999;';
         }
 
 
