@@ -101,7 +101,11 @@
 					<li><a class="text-center" href="#">Grupos <span
 							class="badge badge-pill badge-danger ml-2">3</span>
 					</a></li>
-					<li><a class="text-center" href="#">Resultados </a></li>
+					<li><a class="text-center" href="#">Fixtures<span
+							class="badge badge-pill badge-danger ml-2">6</a></li>
+					<li><a class="text-center" href="#">Resultados <span
+							class="badge badge-pill badge-danger ml-2">4</span>
+					</a></li>
 				</ul>
 
 			</div>
@@ -680,9 +684,80 @@
 							</div>
 							<div id="contenedorGrupos"></div>
 						</div>
+						
 						<div id="content-tab4">
-							<p>A trabajar! :33</p>
+							<div class="row align-items-center mb-5">
+								<div class="col-12 col-md-6">
+									<p id="txtEncabezado" class="text-muted align-middle">
+										Fixtures del Torneo</p>
+								</div>
+								<div class="col-12 col-md-6">
+									<div class="search-container">
+										<form action="#">
+											<button type="submit">
+												<i class="fa fa-search"></i>
+											</button>
+											<input type="text" class="busqueda" placeholder="Buscar..."
+												name="search">
+										</form>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-12">
+
+									<div class="card-title col-12 col-md-11 mt-2">
+										<h4 class="text-justify">Copa Aguila 2016</h4>
+
+										<div class="card">
+											<div>
+												<img src="images/Fixture-Aguila.jpg" width="1000px"
+													height="300px">
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								
+							</div>
+
+
 						</div>
+						
+						  <div id="content-tab5">
+                                <div class="row align-items-center mb-5">
+                                    <div class="col-12 col-md-6">
+                                        <p id="txtEncabezado" class="text-muted align-middle">
+                                          Resultado del Torneo
+                                        </p>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="search-container">
+                                            <form action="#">
+                                                <button type="submit"><i class="fa fa-search"></i></button>
+                                                <input type="text" class="busqueda" placeholder="Buscar..." name="search">
+                                            </form>
+                                        </div>
+                                    </div>
+                                      <div class="card-title col-12 col-md-11 mt-2">
+                              
+						 <div class="card">
+                                  <ul class="list-inline">
+                                      <li class="ajuste">Apuestas Ganadas:</li><br>
+
+                                      <li class="ajuste">Dinero Obtenido:
+                                      </li ><br>
+                                      <li class="ajuste">% de Aciertos:</li><br>
+                                      <li class="ajuste">Ultima Apuesta ganada:</li>
+                                  </ul>
+                                </div>
+                                </div>
+                                </div>                                
+                               
+                              </div>
+                            
+
 					</div>
 				</div>
 			</div>
@@ -768,11 +843,11 @@
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="slick-1.8.1/slick/slick.min.js"></script>
 	<script>
-        
+
 		// Primero, mostrar los datos del usuario
-		
+
 		let usuario=JSON.parse(obtenerGalleta("usuario"));
-		
+
 		if (usuario){
 			
 			// Primero, coloco los datos en la barra superior
@@ -852,7 +927,7 @@
 														</a>
 														</li>
 													</div>
-
+		
 													<div class="col-6 text-center">
 
 														<i class="fa fa-door-open"></i> <a href="#" id="btnEntrar" data-grupo=${data[i].id}
@@ -881,7 +956,7 @@
             });
 					
 		}
-			
+		
 		
  		// Cuando se haga click en el botón de entrar, que se pidan los detalles del grupo
 		$('#contenedorGrupos').on('click','a',function(){
@@ -1000,8 +1075,7 @@
 			
 		});
 
-			
-        // Para las pestañas de la barra
+ 		// Para las pestañas de la barra
         $('.md-tabs').slick({
             centerPadding: '60px',
             slidesToShow: 4,
@@ -1055,7 +1129,7 @@
         });
 
  // Para las galletas
-        
+
         function guardarGalleta(name,value,days) {
             var expires = "";
             if (days) {
@@ -1065,7 +1139,7 @@
             }
             document.cookie = name + "=" + (value || "")  + expires + "; path=/";
         }
-        
+
         function obtenerGalleta(name) {
             var nameEQ = name + "=";
             var ca = document.cookie.split(';');
@@ -1076,8 +1150,8 @@
             }
             return null;
         }
-        function borrarGalleta(name) {   
-            document.cookie = name+'=; Max-Age=-99999999;';  
+        function borrarGalleta(name) {
+            document.cookie = name+'=; Max-Age=-99999999;';
         }
 
 
