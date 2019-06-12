@@ -35,6 +35,8 @@
 	href="slick-1.8.1/slick/slick.css" />
 <link rel="stylesheet" type="text/css"
 	href="slick-1.8.1/slick/slick-theme.css" />
+<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+<link rel="stylesheet" type="text/css" href="css/chat.css" />
 </head>
 
 <body>
@@ -57,16 +59,11 @@
 							<div class="row justify-content-end navbar-collapse collapse"
 								id="navDatosUsuario">
 								<ul class="nav navbar-nav">
-									<li class="ml-2 nav-item">
-									
-									<img
-											class="img-barra-usuario mr-2" alt="img-barra-usuario"
-											src="images/incognito.jpg">
-									<a class="nav-link"
+									<li class="ml-2 nav-item"><img
+										class="img-barra-usuario mr-2" alt="img-barra-usuario"
+										src="images/incognito.jpg"> <a class="nav-link"
 										id="linkDatosUsuario" aria-current="false" href="#"> Nadie
-									</a>
-									
-									</li>
+									</a></li>
 									<li class="ml-2 nav-item"><a class="nav-link"
 										aria-current="false" href="#">S/. 69.00</a></li>
 									<li class="nav-item dropdown d-none d-lg-block"><a
@@ -681,124 +678,7 @@
 									</div>
 								</div>
 							</div>
-
-							<div class="row">
-								<div class="col-12">
-									<div class="card">
-										<div class="ribbon ribbon-top-right ribbon-red">
-											<span>Pozo acumulado: S/. 15,622</span>
-										</div>
-										<div class="card-block">
-											<div class="row">
-												<div class="col-12 col-md-1">
-													<div class="card-img">
-														<img class="img-apuesta" src="images/peru.jpg">
-													</div>
-												</div>
-												<div class="card-title col-12 col-md-11 mt-2">
-													<h4 class="text-justify">
-														Yo apuesto por Perú este mundial :3 <span
-															class="badge badge-pill badge-danger ml-2">2</span>
-
-
-													</h4>
-													<p>
-														<i class="fa fa-clock"></i>Cierra en 3 horas, 2 minutos
-														&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-globe"></i>Público
-													</p>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-12">
-													<ul class="list-inline">
-														<li><i class="fa fa-user"></i>Creado por: Andrea
-															Loedrin</li>
-
-														<li><i class="fa fa-calendar"></i>Evento: Mundial
-															Qatar 2022</li>
-														<li><i class="fa fa-gavel"></i>Apuestas: Perú vs
-															Chile</li>
-														<li><i class="fa fa-users"></i>3,161 apostadores</li>
-													</ul>
-												</div>
-											</div>
-											<hr>
-											<div class="row">
-												<div class="col-6 text-center">
-													<a href="#"> <i class="fa fa-info"></i> <a href="#"
-														class="txt-mayuscula">Detalles</a>
-													</a>
-													</li>
-												</div>
-
-												<div class="col-6 text-center">
-
-													<i class="fa fa-door-open"></i> <a href="#"
-														class="txt-mayuscula">Entrar</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-12">
-									<div class="card">
-										<div class="ribbon ribbon-top-right ribbon-red">
-											<span>Pozo acumulado: S/. 130</span>
-										</div>
-										<div class="card-block">
-											<div class="row">
-												<div class="col-12 col-md-1">
-													<div class="card-img">
-														<img class="img-apuesta" src="images/amigos.jpg">
-													</div>
-												</div>
-												<div class="card-title col-12 col-md-11 mt-2">
-													<h4 class="text-justify">
-														Quien pierde paga Netflix! Cobras vs Leones <span
-															class="badge badge-pill badge-danger ml-2">1</span>
-													</h4>
-													<p>
-														<i class="fa fa-clock"></i>Cierra en 25 minutos
-														&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-lock"></i>Privado
-													</p>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-12">
-													<ul class="list-inline">
-														<li><i class="fa fa-user"></i>Creado por ti</li>
-
-														<li><i class="fa fa-calendar"></i>Evento
-															personalizado: Combate - Gran final</li>
-														<li><i class="fa fa-gavel"></i>Apuestas: Cobras vs
-															Leones</li>
-														<li><i class="fa fa-users"></i>7 apostadores</li>
-													</ul>
-												</div>
-											</div>
-											<hr>
-											<div class="row">
-												<div class="col-6 text-center">
-													<a href="#"> <i class="fa fa-info"></i> <a href="#"
-														class="txt-mayuscula">Detalles</a>
-													</a>
-													</li>
-												</div>
-
-												<div class="col-6 text-center">
-
-													<i class="fa fa-door-open"></i> <a href="#"
-														class="txt-mayuscula">Entrar</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-
+							<div id="contenedorGrupos"></div>
 						</div>
 						<div id="content-tab4">
 							<p>A trabajar! :33</p>
@@ -894,13 +774,233 @@
 		let usuario=JSON.parse(obtenerGalleta("usuario"));
 		
 		if (usuario){
+			
+			// Primero, coloco los datos en la barra superior
 			$('#linkDatosUsuario').text(usuario.nombre+" "+usuario.apPaterno);
 			
-		} else {
-    		window.location.replace("index.html");
+			$('#contenedorGrupos').empty();
+			
+			$.ajax({
+                type: 'POST',
+                headers: {  'Access-Control-Allow-Origin': '*'},
+                url: 'http://localhost:8080/TeApuestoRest/api/post/grupoApuesta/obtenerGruposApuestaPorUsuario',
+                dataType:'json',
+                contentType:'application/json',
+                data: JSON.stringify({
+                    "codigo": usuario.codigo
+                }),
+                success: function (data) {
+                    
+                	if (data) {
+                		
+                		for (var i=0;i<data.length;i++){
+                			
+                			var tipoPrivacidad="";
+                			
+                			if (data[i].tipo.id==1){
+                				tipoPrivacidad= `<i class="fa fa-globe"></i>${data[i].tipo.descripcion}`
+								} else {
+									tipoPrivacidad=`<i class="fa fa-lock"></i>${data[i].tipo.descripcion}`
+								}
+                			
+                    		$("#contenedorGrupos").append(`
+                    				<div class="row">
+									<div class="col-12">
+										<div class="card">
+											<div class="ribbon ribbon-top-right ribbon-red">
+												<span>Pozo acumulado: S/. ${data[i].pozo}</span>
+											</div>
+											<div class="card-block">
+												<div class="row">
+													<div class="col-12 col-md-1">
+														<div class="card-img">
+															<img class="img-apuesta" src="images/peru.jpg">
+														</div>
+													</div>
+													<div class="card-title col-12 col-md-11 mt-2">
+														<h4 class="text-justify">
+															${data[i].nombre} <span
+																class="badge badge-pill badge-danger ml-2">2</span>
 
+
+														</h4>
+														<p>
+															<i class="fa fa-clock"></i>Cierra en 3 horas, 2 minutos
+															&nbsp;&nbsp;&nbsp;&nbsp; 
+															
+															${tipoPrivacidad}
+															
+														</p>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-12">
+														<ul class="list-inline">
+															<li><i class="fa fa-user"></i>Creado por: ${data[i].admin.nombre} ${data[i].admin.apPaterno} ${data[i].admin.apMaterno}</li>
+
+															<li><i class="fa fa-calendar"></i>Evento: ${data[i].evento.nombre}</li>
+															<li><i class="fa fa-gavel"></i>Apuesta mínima: S/. ${data[i].montoMin}</li>
+															<li><i class="fa fa-users"></i>${data[i].cantApost} apostadores</li>
+														</ul>
+													</div>
+												</div>
+												<hr>
+												<div class="row">
+													<div class="col-6 text-center">
+														<a href="#"> <i class="fa fa-info"></i> <a href="#"
+															class="txt-mayuscula">Detalles</a>
+														</a>
+														</li>
+													</div>
+
+													<div class="col-6 text-center">
+
+														<i class="fa fa-door-open"></i> <a href="#" id="btnEntrar" data-grupo=${data[i].id}
+															class="txt-mayuscula">Entrar</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+                    				`);
+
+                		}
+                		
+                		
+                		
+                	} else {
+                		$("#contenedorGrupos").append("<div class='alert alert-danger' role='alert'>No se pudo obtener datos</div>")
+                	}                  
+                    
+                },
+                error: function (data){
+                	
+                    alert(JSON.stringify(data));
+                }
+            });
+					
 		}
+			
 		
+ 		// Cuando se haga click en el botón de entrar, que se pidan los detalles del grupo
+		$('#contenedorGrupos').on('click','a',function(){
+			var idGrupo = $(this).attr("data-grupo");
+			//alert(idGrupo);
+			
+			$.ajax({
+            type: 'POST',
+            headers: {  'Access-Control-Allow-Origin': '*'},
+            url: 'http://localhost:8080/TeApuestoRest/api/post/grupoApuesta/obtenerDetalleGrupoChat',
+            dataType:'json',
+            contentType:'application/json',
+            data: JSON.stringify({
+                "idGrupoApuesta": idGrupo
+            }),
+            success: function (data) {
+                
+            	if (data) {
+					
+            		// Si hay data, que lo muestre	
+            		$('#contenedorGrupos').empty();
+    				$('#contenedorGrupos').append(`
+    						<div class="row">
+    						<!-- Conversation Start -->
+    					      <div class="col-sm-12 conversation">
+    					        <!-- Heading -->
+    					        <div class="row heading">
+    					          <div class="col-sm-2 col-md-1 col-xs-3 heading-avatar">
+    					            <div class="heading-avatar-icon">
+    					            <i class="fa fa-arrow-left fa-2x"></i>
+    					            </div>
+    					          </div>
+    					          <div class="col-sm-6 col-md-7 col-xs-5 heading-name">
+    					            <a class="heading-name-meta">${data.grupo.nombre}
+    					            </a>
+    					            <span class="heading-online">Online</span>
+    					          </div>
+    					          <div class="featured-btn-wrap-inline">
+									<a href="#" class="btn btn-danger">
+										Insertar predicción</a>
+								</div>
+    					          <div class="col-sm-2 col-md-2 col-xs-2  heading-dot pull-right">
+    					            <i class="fa fa-ellipsis-v fa-2x float-right" aria-hidden="true"></i>
+    					          </div>
+    					        </div>
+    					        <!-- Heading End -->
+
+    					        <!-- Message Box -->
+    					        <div class="row message" id="conversation">
+
+    					          <div class="row message-previous">
+    					            <div class="col-sm-12 previous">
+    					              <a onclick="previous(this)" id="ankitjain28" name="20">
+    					              Ver mensajes anteriores!
+    					              </a>
+    					            </div>
+    					          </div>
+
+    					          <div class="row message-body">
+    					            <div class="col-sm-12 message-main-receiver">
+    					              <div class="receiver">
+    					                <div class="message-text">
+    					                 Hyy, Its Awesome..!
+    					                </div>
+    					                <span class="message-time pull-right">
+    					                  Sun
+    					                </span>
+    					              </div>
+    					            </div>
+    					          </div>
+
+    					          <div class="row message-body">
+    					            <div class="col-sm-12 message-main-sender">
+    					              <div class="sender">
+    					                <div class="message-text">
+    					                  Thanks n I know its awesome...!
+    					                </div>
+    					                <span class="message-time pull-right">
+    					                  Sun
+    					                </span>
+    					              </div>
+    					            </div>
+    					          </div>
+    					        </div>
+    					        <!-- Message Box End -->
+
+    					        <!-- Reply Box -->
+    					        <div class="row reply">
+    					          <div class="col-xs-1 reply-emojis">
+    					            <i class="fa fa-smile-o fa-2x"></i>
+    					          </div>
+    					          <div class="col-xs-10 reply-main">
+    					            <textarea class="form-control" rows="1" id="comment"></textarea>
+    					          </div>
+    					          
+    					          <div class="col-xs-1 reply-send">
+    					            <i class="fa fa-2x fa-paper-plane" aria-hidden="true"></i>
+    					          </div>
+    					        </div>
+    					        <!-- Reply Box End -->
+    					      </div>
+    					      <!-- Conversation End -->		
+    					      </div>
+    				`);
+
+            		
+            	}
+			},
+            error: function (data){
+            	
+                alert(JSON.stringify(data));
+            }    
+		});
+			
+			
+			
+		});
+
+			
         // Para las pestañas de la barra
         $('.md-tabs').slick({
             centerPadding: '60px',
