@@ -36,6 +36,7 @@
 <link rel="stylesheet" type="text/css"
 	href="slick-1.8.1/slick/slick-theme.css" />
 <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+<link rel="stylesheet" href="css/jquery.page.css" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/chat.css" />
 </head>
 
@@ -659,32 +660,96 @@
 
 						</div>
 						<div id="content-tab3">
-							<div class="row align-items-center mb-5">
-								<div class="col-6 col-md-4">
-									<p id="txtEncabezado" class="text-muted align-middle">Mis
-										grupos de apuesta</p>
-								</div>
-								<div class="col-6 col-md-3">
-									<div class="featured-btn-wrap-inline">
-										<a href="#" class="btn btn-danger"><span class="ti-plus"></span>
-											Crear grupo</a>
+
+
+							<!-- Página contenedor es para que ocurra una transición -->
+							<div id="paginaContenedorGrupos">
+								<div>
+									<div class="page" data-jquery-page-name="misGruposLista">
+
+										<div class="row align-items-center mb-5">
+											<div class="col-6 col-md-4">
+												<p id="txtEncabezado" class="text-muted align-middle">Mis
+													grupos de apuesta</p>
+											</div>
+											<div class="col-6 col-md-3">
+												<div class="featured-btn-wrap-inline">
+													<a href="#" class="btn btn-danger"><span
+														class="ti-plus"></span> Crear grupo</a>
+												</div>
+											</div>
+											<div class="col-12 col-md-5">
+												<div class="search-container">
+													<form action="#">
+														<button type="submit">
+															<i class="fa fa-search"></i>
+														</button>
+														<input id="input-busqueda-apuesta" type="text"
+															class="busqueda" placeholder="Buscar..." name="search">
+													</form>
+												</div>
+											</div>
+										</div>
+
+										<div id="contenedorGrupos"></div>
 									</div>
-								</div>
-								<div class="col-12 col-md-5">
-									<div class="search-container">
-										<form action="#">
-											<button type="submit">
-												<i class="fa fa-search"></i>
-											</button>
-											<input id="input-busqueda-apuesta" type="text"
-												class="busqueda" placeholder="Buscar..." name="search">
-										</form>
+
+									<div id="contenedorChat" class="page"
+										data-jquery-page-name="misGruposChat">
+										<div class="row">
+											<!-- Conversation Start -->
+											<div class="col-sm-12 conversation">
+												<!-- Heading -->
+												<div class="row heading mb-2">
+													<div class="col-sm-2 col-md-1 col-xs-3 heading-avatar">
+														<div class="heading-avatar-icon" id="btnRegresarMisGrupos">
+															<i class="fa fa-arrow-left fa-2x"></i>
+														</div>
+													</div>
+													<div class="col-sm-6 col-md-7 col-xs-5 heading-name">
+														<a class="heading-name-meta">Nombre grupo</a> <span
+															class="heading-online">Online</span>
+													</div>
+													<div class="featured-btn-wrap-inline">
+														<a href="#" class="btn btn-danger"> Insertar
+															predicción</a>
+													</div>
+													<div
+														class="col-sm-2 col-md-2 col-xs-2  heading-dot pull-right">
+														<i class="fa fa-ellipsis-v fa-2x float-right"
+															aria-hidden="true"></i>
+													</div>
+												</div>
+												<!-- Heading End -->
+
+												<!-- Message Box -->
+												<div class="row message" id="conversation"></div>
+												<!-- Message Box End -->
+
+												<!-- Reply Box -->
+												<div class="row reply">
+													<div class="col-xs-1 reply-emojis">
+														<i class="fa fa-smile-o fa-2x"></i>
+													</div>
+													<div class="col-xs-10 reply-main">
+														<textarea class="form-control" rows="1" id="txtMensaje"></textarea>
+													</div>
+
+													<div class="col-xs-1 reply-send" id="btnEnviarMensajeChat">
+														<i class="fa fa-2x fa-paper-plane" aria-hidden="true"></i>
+													</div>
+												</div>
+												<!-- Reply Box End -->
+											</div>
+											<!-- Conversation End -->
+										</div>
 									</div>
 								</div>
 							</div>
-							<div id="contenedorGrupos"></div>
+
+
 						</div>
-						
+
 						<div id="content-tab4">
 							<div class="row align-items-center mb-5">
 								<div class="col-12 col-md-6">
@@ -718,45 +783,49 @@
 										</div>
 									</div>
 								</div>
-								
-								
+
+
 							</div>
 
 
 						</div>
-						
-						  <div id="content-tab5">
-                                <div class="row align-items-center mb-5">
-                                    <div class="col-12 col-md-6">
-                                        <p id="txtEncabezado" class="text-muted align-middle">
-                                          Resultado del Torneo
-                                        </p>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="search-container">
-                                            <form action="#">
-                                                <button type="submit"><i class="fa fa-search"></i></button>
-                                                <input type="text" class="busqueda" placeholder="Buscar..." name="search">
-                                            </form>
-                                        </div>
-                                    </div>
-                                      <div class="card-title col-12 col-md-11 mt-2">
-                              
-						 <div class="card">
-                                  <ul class="list-inline">
-                                      <li class="ajuste">Apuestas Ganadas:</li><br>
 
-                                      <li class="ajuste">Dinero Obtenido:
-                                      </li ><br>
-                                      <li class="ajuste">% de Aciertos:</li><br>
-                                      <li class="ajuste">Ultima Apuesta ganada:</li>
-                                  </ul>
-                                </div>
-                                </div>
-                                </div>                                
-                               
-                              </div>
-                            
+						<div id="content-tab5">
+							<div class="row align-items-center mb-5">
+								<div class="col-12 col-md-6">
+									<p id="txtEncabezado" class="text-muted align-middle">
+										Resultado del Torneo</p>
+								</div>
+								<div class="col-12 col-md-6">
+									<div class="search-container">
+										<form action="#">
+											<button type="submit">
+												<i class="fa fa-search"></i>
+											</button>
+											<input type="text" class="busqueda" placeholder="Buscar..."
+												name="search">
+										</form>
+									</div>
+								</div>
+								<div class="card-title col-12 col-md-11 mt-2">
+
+									<div class="card">
+										<ul class="list-inline">
+											<li class="ajuste">Apuestas Ganadas:</li>
+											<br>
+
+											<li class="ajuste">Dinero Obtenido:</li>
+											<br>
+											<li class="ajuste">% de Aciertos:</li>
+											<br>
+											<li class="ajuste">Ultima Apuesta ganada:</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+
+						</div>
+
 
 					</div>
 				</div>
@@ -839,15 +908,20 @@
 	<!-- jQuery, Bootstrap JS. -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="js/jquery.page.min.js"></script>
 	<script type="text/javascript" src="js/popper.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="slick-1.8.1/slick/slick.min.js"></script>
 	<script>
-
+	 // Cargo el deslizador de página
+	  $("#paginaContenedorGrupos").page();	
+	
 		// Primero, mostrar los datos del usuario
-
 		let usuario=JSON.parse(obtenerGalleta("usuario"));
-
+	
+		// Aquí se va a guardar el código de grupo de usuario que uno haya seleccionado
+		let idGrupoSeleccionado=-1;
+		
 		if (usuario){
 			
 			// Primero, coloco los datos en la barra superior
@@ -961,9 +1035,70 @@
  		// Cuando se haga click en el botón de entrar, que se pidan los detalles del grupo
 		$('#contenedorGrupos').on('click','a',function(){
 			var idGrupo = $(this).attr("data-grupo");
-			//alert(idGrupo);
+			// Realizo la transición
+			mostrarDetalleGrupo(idGrupo);
+    		$("#paginaContenedorGrupos").page().transition("misGruposChat", "slide-in-from-right");
+
+						
+		});
+ 		
+		// Cuando se haga click en enviar mensaje, que se envíe
+		$('#btnEnviarMensajeChat').click(function(){
 			
-			$.ajax({
+			//Primero, hago la validación
+			if (idGrupoSeleccionado!=1){
+				
+				let mensaje=$("#txtMensaje").val().trim();
+				
+				if (mensaje!=""){
+					// Si todo está correcto, recién puedo enviar el mensaje
+					enviarMensaje(idGrupoSeleccionado,mensaje,usuario.codigo);
+					
+				}
+				else {
+					alert("El mensaje no puede estar vacío")
+				}
+				
+			}
+			
+			
+			
+			
+		});
+	
+	function enviarMensaje(idGrupo, mensaje, codUsu){
+		$.ajax({
+            type: 'POST',
+            headers: {  'Access-Control-Allow-Origin': '*'},
+            url: 'http://localhost:8080/TeApuestoRest/api/post/mensaje/enviarMensaje',
+            dataType:'json',
+            contentType:'application/json',
+            data: JSON.stringify({
+                "idGap": idGrupo,
+                "contenido":mensaje,
+                "remitente":{
+                "codigo":codUsu	
+                }
+                
+            }),
+            success: function (data) {
+                
+            	if (data) {
+            		// Si se envió el mensaje, que limpite la caja de texto
+       	      	 $("#txtMensaje").val("");  	 
+            		mostrarDetalleGrupo(idGrupo);
+            	      	             	      	 
+            	}
+			},
+            error: function (data){
+            	
+                alert(JSON.stringify(data));
+            }    
+		});
+		}
+	
+	function mostrarDetalleGrupo(idGrupo){
+		$.ajax({
             type: 'POST',
             headers: {  'Access-Control-Allow-Origin': '*'},
             url: 'http://localhost:8080/TeApuestoRest/api/post/grupoApuesta/obtenerDetalleGrupoChat',
@@ -975,110 +1110,77 @@
             success: function (data) {
                 
             	if (data) {
-					
-            		// Si hay data, que lo muestre	
-            		$('#contenedorGrupos').empty();
-    				$('#contenedorGrupos').append(`
-    						<div class="row">
-    						<!-- Conversation Start -->
-    					      <div class="col-sm-12 conversation">
-    					        <!-- Heading -->
-    					        <div class="row heading">
-    					          <div class="col-sm-2 col-md-1 col-xs-3 heading-avatar">
-    					            <div class="heading-avatar-icon">
-    					            <i class="fa fa-arrow-left fa-2x"></i>
-    					            </div>
-    					          </div>
-    					          <div class="col-sm-6 col-md-7 col-xs-5 heading-name">
-    					            <a class="heading-name-meta">${data.grupo.nombre}
-    					            </a>
-    					            <span class="heading-online">Online</span>
-    					          </div>
-    					          <div class="featured-btn-wrap-inline">
-									<a href="#" class="btn btn-danger">
-										Insertar predicción</a>
-								</div>
-    					          <div class="col-sm-2 col-md-2 col-xs-2  heading-dot pull-right">
-    					            <i class="fa fa-ellipsis-v fa-2x float-right" aria-hidden="true"></i>
-    					          </div>
-    					        </div>
-    					        <!-- Heading End -->
-
-    					        <!-- Message Box -->
-    					        <div class="row message" id="conversation">
-
-    					          <div class="row message-previous">
-    					            <div class="col-sm-12 previous">
-    					              <a onclick="previous(this)" id="ankitjain28" name="20">
-    					              Ver mensajes anteriores!
-    					              </a>
-    					            </div>
-    					          </div>
-
-    					          <div class="row message-body">
-    					            <div class="col-sm-12 message-main-receiver">
-    					              <div class="receiver">
-    					                <div class="message-text">
-    					                 Hyy, Its Awesome..!
-    					                </div>
-    					                <span class="message-time pull-right">
-    					                  Sun
-    					                </span>
-    					              </div>
-    					            </div>
-    					          </div>
-
-    					          <div class="row message-body">
-    					            <div class="col-sm-12 message-main-sender">
-    					              <div class="sender">
-    					                <div class="message-text">
-    					                  Thanks n I know its awesome...!
-    					                </div>
-    					                <span class="message-time pull-right">
-    					                  Sun
-    					                </span>
-    					              </div>
-    					            </div>
-    					          </div>
-    					        </div>
-    					        <!-- Message Box End -->
-
-    					        <!-- Reply Box -->
-    					        <div class="row reply">
-    					          <div class="col-xs-1 reply-emojis">
-    					            <i class="fa fa-smile-o fa-2x"></i>
-    					          </div>
-    					          <div class="col-xs-10 reply-main">
-    					            <textarea class="form-control" rows="1" id="comment"></textarea>
-    					          </div>
-    					          
-    					          <div class="col-xs-1 reply-send">
-    					            <i class="fa fa-2x fa-paper-plane" aria-hidden="true"></i>
-    					          </div>
-    					        </div>
-    					        <!-- Reply Box End -->
-    					      </div>
-    					      <!-- Conversation End -->		
-    					      </div>
-    				`);
-
+            	    
+            		// Establezco el id del grupo que se ha seleccionado
+            		idGrupoSeleccionado=data.grupo.id;
+            		
+            		
+            		
+	            	// Cambio el texto del grupo
+					$(".heading-name-meta").text(data.grupo.nombre);
+            		
+            		let mensajes=data.mensajes;
+            		
+            		// Llamo a esta función reciclable para que pueda ser usada desde otros lugares
+            		mostrarMensajes(mensajes);
+					            		           		
             		
             	}
 			},
             error: function (data){
-            	
+        		idGrupoSeleccionado=-1;
                 alert(JSON.stringify(data));
             }    
 		});
-			
-			
-			
-		});
+		}
+	
+ 		function mostrarMensajes(mensajes){
+ 			
+			$("#conversation").empty();
+ 			
+ 			for (var i=0;i<mensajes.length;i++){
+    			
+    			let mensaje=mensajes[i];
+    			
+    			// Hago una validación para que muestre la burbuja de chat dependiendo del remitente
+    			
+    			if (mensaje.remitente.codigo==usuario.codigo){
+    				$("#conversation").append(`<div class="row message-body">
+							<div class="col-sm-12 message-main-sender mb-2">
+							<div class="sender">
+							<p class="text-muted" style="margin-bottom: 0px;">@${mensaje.remitente.apodo} - Yo</p>
 
+								<div class="message-text">${mensaje.contenido}</div>
+								<span class="message-time pull-right">${mensaje.fecEnvio}</span>
+							</div>
+						</div>
+					</div>`);                   		
+    			}
+    			else{
+    			
+    			$("#conversation").append(`
+    					<div class="row message-body">
+						<div class="col-sm-12 message-main-receiver mb-2">
+							<div class="receiver">
+								<p class="text-muted" style="margin-bottom: 0px;">@${mensaje.remitente.apodo} - ${mensaje.remitente.nombre}</p>
+								<div class="message-text">${mensaje.contenido}</div>
+								<span class="message-time pull-right">${mensaje.fecEnvio}</span>
+							</div>
+						</div>
+					</div>`);
+    			}
+    		}
+ 		}
+ 		
+ 		// Para regresar a la lista de grupos
+ 		$("#btnRegresarMisGrupos").click(function(){
+ 		      $("#paginaContenedorGrupos").page().transition("misGruposLista", "slide-in-from-left");
+ 		})
+ 		
  		// Para las pestañas de la barra
         $('.md-tabs').slick({
             centerPadding: '60px',
-            slidesToShow: 4,
+            slidesToShow: 5,
             infinite: false,
             centerMode: false,
             responsive: [
@@ -1087,7 +1189,7 @@
                     settings: {
                         arrows: false,
                         centerPadding: '40px',
-                        slidesToShow: 3.4
+                        slidesToShow: 4.4
                     }
                 },
                 {
@@ -1095,7 +1197,7 @@
                     settings: {
                         arrows: false,
                         centerPadding: '40px',
-                        slidesToShow: 2.4,
+                        slidesToShow: 3.4,
                         dots: false
                     }
                 }
