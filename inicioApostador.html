@@ -108,8 +108,7 @@
 					<li><a class="text-center" href="#">Grupos <span
 							class="badge badge-pill badge-danger ml-2">3</span>
 					</a></li>
-					<li><a class="text-center" href="#">Fixtures<span
-							class="badge badge-pill badge-danger ml-2">6</a></li>
+
 					<li><a class="text-center" href="#">Resultados <span
 							class="badge badge-pill badge-danger ml-2">4</span>
 					</a></li>
@@ -497,8 +496,8 @@
 															class="heading-online">Online</span>
 													</div>
 													<div class="featured-btn-wrap-inline">
-														<a href="#" class="btn btn-danger"> Insertar
-															predicción</a>
+														<a href="#" class="btn btn-danger"
+															id="btnInsertarPrediccion"> Insertar predicción</a>
 													</div>
 													<div
 														class="col-sm-2 col-md-2 col-xs-2  heading-dot pull-right">
@@ -537,46 +536,6 @@
 						</div>
 
 						<div id="content-tab4">
-							<div class="row align-items-center mb-5">
-								<div class="col-12 col-md-6">
-									<p id="txtEncabezado" class="text-muted align-middle">
-										Fixtures del Torneo</p>
-								</div>
-								<div class="col-12 col-md-6">
-									<div class="search-container">
-										<form action="#">
-											<button type="submit">
-												<i class="fa fa-search"></i>
-											</button>
-											<input type="text" class="busqueda" placeholder="Buscar..."
-												name="search">
-										</form>
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-12">
-
-									<div class="card-title col-12 col-md-11 mt-2">
-										<h4 class="text-justify">Copa Aguila 2016</h4>
-
-										<div class="card">
-											<div>
-												<img src="images/Fixture-Aguila.jpg" width="1000px"
-													height="300px">
-											</div>
-										</div>
-									</div>
-								</div>
-
-
-							</div>
-
-
-						</div>
-
-						<div id="content-tab5">
 							<div class="row align-items-center mb-5">
 								<div class="col-12 col-md-6">
 									<p id="txtEncabezado" class="text-muted align-middle">
@@ -719,9 +678,132 @@
 		let usuario=JSON.parse(obtenerGalleta("usuario"));
 	
 		// Aquí se va a guardar el código de grupo de usuario que uno haya seleccionado
-		let idGrupoSeleccionado=-1;
+		let idGrupoSeleccionado=null;
 		
 		if (usuario){
+			
+			
+			// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
+			
+			// PESTAÑA 1 - INICIO //
+			
+			
+			// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
+			
+			// PESTAÑA 2 - APUESTAS //
+			
+			function cargarGruposGeneral(){
+				//alert(1)
+				$('#contenedorGruposGeneral').empty();
+				 $.ajax({
+		         type: 'POST',
+		         headers: {  'Access-Control-Allow-Origin': '*'},
+		         url: 'http://localhost:8080/TeApuestoRest/api/post/grupoApuesta/obtenerGruposApuestaPorNombre',
+		         dataType:'json',
+		         contentType:'application/json',
+		         data: JSON.stringify({
+		        	 "nombre": ""
+		         }),
+		         success: function (data) {
+		             
+		         	if (data) {
+		         		
+		         		for (var i=0;i<data.length;i++){
+		         			
+		         			var tipoPrivacidad="";
+		         			
+		         			if (data[i].tipo.id==1){
+		         				tipoPrivacidad= `<i class="fa fa-globe"></i>${data[i].tipo.descripcion}`
+									} else {
+										tipoPrivacidad=`<i class="fa fa-lock"></i>${data[i].tipo.descripcion}`
+									}
+		         			
+		             		$("#contenedorGruposGeneral").append(`
+		             				<div class="row">
+										<div class="col-12">
+											<div class="card">
+												<div class="ribbon ribbon-top-right ribbon-red">
+													<span>Pozo acumulado: S/. ${data[i].pozo}</span>
+												</div>
+												<div class="card-block">
+													<div class="row">
+														<div class="col-12 col-md-1">
+															<div class="card-img">
+																<img class="img-apuesta" src="images/peru.jpg">
+															</div>
+														</div>
+														<div class="card-title col-12 col-md-11 mt-2">
+															<h4 class="text-justify">
+																${data[i].nombre} <span
+																	class="badge badge-pill badge-danger ml-2">2</span>
+
+
+															</h4>
+															<p>
+																<i class="fa fa-clock"></i>Cierra en 3 horas, 2 minutos
+																&nbsp;&nbsp;&nbsp;&nbsp; 
+																
+																${tipoPrivacidad}
+																
+															</p>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-12">
+															<ul class="list-inline">
+																<li><i class="fa fa-user"></i>Creado por: ${data[i].admin.nombre} ${data[i].admin.apPaterno} ${data[i].admin.apMaterno}</li>
+
+																<li><i class="fa fa-calendar"></i>Evento: ${data[i].evento.nombre}</li>
+																<li><i class="fa fa-gavel"></i>Apuesta mínima: S/. ${data[i].montoMin}</li>
+																<li><i class="fa fa-users"></i>${data[i].cantApost} apostadores</li>
+															</ul>
+														</div>
+													</div>
+													<hr>
+													<div class="row">
+														<div class="col-6 text-center">
+															<a href="#"> <i class="fa fa-info"></i> <a href="#"
+																class="txt-mayuscula">Detalles</a>
+															</a>
+															</li>
+														</div>
+			
+														<div class="col-6 text-center">
+
+															<i class="fa fa-door-open"></i> <a href="#" id="btnEntrar" data-grupo=${data[i].id}
+																class="txt-mayuscula">Entrar</a>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+		             				`);
+
+		         		}
+		         		
+		         		
+		         		
+		         	} else {
+		         		$("#contenedorGruposGeneral").append("<div class='alert alert-danger' role='alert'>No se pudo obtener datos</div>")
+		         	}                  
+		             
+		         },
+		         error: function (data){
+		         	
+		             alert(JSON.stringify(data));
+		         }
+		     });
+						
+				
+			}
+		
+			cargarGruposGeneral()
+			
+			
+			// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
+			
+			// PESTAÑA 3 - GRUPOS //
 			
 			// Primero, coloco los datos en la barra superior
 			$('#linkDatosUsuario').text(usuario.nombre+" "+usuario.apPaterno);
@@ -837,7 +919,6 @@
 			var idGrupo = $(this).attr("data-grupo");
 			// Realizo la transición
 			mostrarDetalleGrupo(idGrupo);
-    		$("#paginaContenedorGrupos").page().transition("misGruposChat", "slide-in-from-right");
 
 						
 		});
@@ -846,7 +927,7 @@
 		$('#btnEnviarMensajeChat').click(function(){
 			
 			//Primero, hago la validación
-			if (idGrupoSeleccionado!=1){
+			if (idGrupoSeleccionado){
 				
 				let mensaje=$("#txtMensaje").val().trim();
 				
@@ -866,113 +947,7 @@
 			
 		});
 	
-		function cargarGruposGeneral(){
-			//alert(1)
-			$('#contenedorGruposGeneral').empty();
-			 $.ajax({
-	         type: 'POST',
-	         headers: {  'Access-Control-Allow-Origin': '*'},
-	         url: 'http://localhost:8080/TeApuestoRest/api/post/grupoApuesta/obtenerGruposApuestaPorNombre',
-	         dataType:'json',
-	         contentType:'application/json',
-	         data: JSON.stringify({
-	        	 "nombre": ""
-	         }),
-	         success: function (data) {
-	             
-	         	if (data) {
-	         		
-	         		for (var i=0;i<data.length;i++){
-	         			
-	         			var tipoPrivacidad="";
-	         			
-	         			if (data[i].tipo.id==1){
-	         				tipoPrivacidad= `<i class="fa fa-globe"></i>${data[i].tipo.descripcion}`
-								} else {
-									tipoPrivacidad=`<i class="fa fa-lock"></i>${data[i].tipo.descripcion}`
-								}
-	         			
-	             		$("#contenedorGruposGeneral").append(`
-	             				<div class="row">
-									<div class="col-12">
-										<div class="card">
-											<div class="ribbon ribbon-top-right ribbon-red">
-												<span>Pozo acumulado: S/. ${data[i].pozo}</span>
-											</div>
-											<div class="card-block">
-												<div class="row">
-													<div class="col-12 col-md-1">
-														<div class="card-img">
-															<img class="img-apuesta" src="images/peru.jpg">
-														</div>
-													</div>
-													<div class="card-title col-12 col-md-11 mt-2">
-														<h4 class="text-justify">
-															${data[i].nombre} <span
-																class="badge badge-pill badge-danger ml-2">2</span>
-
-
-														</h4>
-														<p>
-															<i class="fa fa-clock"></i>Cierra en 3 horas, 2 minutos
-															&nbsp;&nbsp;&nbsp;&nbsp; 
-															
-															${tipoPrivacidad}
-															
-														</p>
-													</div>
-												</div>
-												<div class="row">
-													<div class="col-12">
-														<ul class="list-inline">
-															<li><i class="fa fa-user"></i>Creado por: ${data[i].admin.nombre} ${data[i].admin.apPaterno} ${data[i].admin.apMaterno}</li>
-
-															<li><i class="fa fa-calendar"></i>Evento: ${data[i].evento.nombre}</li>
-															<li><i class="fa fa-gavel"></i>Apuesta mínima: S/. ${data[i].montoMin}</li>
-															<li><i class="fa fa-users"></i>${data[i].cantApost} apostadores</li>
-														</ul>
-													</div>
-												</div>
-												<hr>
-												<div class="row">
-													<div class="col-6 text-center">
-														<a href="#"> <i class="fa fa-info"></i> <a href="#"
-															class="txt-mayuscula">Detalles</a>
-														</a>
-														</li>
-													</div>
 		
-													<div class="col-6 text-center">
-
-														<i class="fa fa-door-open"></i> <a href="#" id="btnEntrar" data-grupo=${data[i].id}
-															class="txt-mayuscula">Entrar</a>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-	             				`);
-
-	         		}
-	         		
-	         		
-	         		
-	         	} else {
-	         		$("#contenedorGruposGeneral").append("<div class='alert alert-danger' role='alert'>No se pudo obtener datos</div>")
-	         	}                  
-	             
-	         },
-	         error: function (data){
-	         	
-	             alert(JSON.stringify(data));
-	         }
-	     });
-					
-			
-		}
-	
-		cargarGruposGeneral()
 		
 	function enviarMensaje(idGrupo, mensaje, codUsu){
 		$.ajax({
@@ -1019,14 +994,22 @@
                 
             	if (data) {
             	    
+            		if (!idGrupoSeleccionado){
+                		$("#paginaContenedorGrupos").page().transition("misGruposChat", "slide-in-from-right");
+            		}
+            		
             		// Establezco el id del grupo que se ha seleccionado
             		idGrupoSeleccionado=data.grupo.id;
-            		
-            		
-            		
+            		           			
 	            	// Cambio el texto del grupo
 					$(".heading-name-meta").text(data.grupo.nombre);
             		
+					$("#conversation").animate({
+						  scrollTop: $('#conversation')[0].scrollHeight
+						}, 1000);
+	            	
+
+	            	
             		let mensajes=data.mensajes;
             		
             		// Llamo a esta función reciclable para que pueda ser usada desde otros lugares
@@ -1036,7 +1019,7 @@
             	}
 			},
             error: function (data){
-        		idGrupoSeleccionado=-1;
+        		idGrupoSeleccionado=null;
                 alert(JSON.stringify(data));
             }    
 		});
@@ -1082,13 +1065,14 @@
  		
  		// Para regresar a la lista de grupos
  		$("#btnRegresarMisGrupos").click(function(){
+ 			idGrupoSeleccionado=null;
  		      $("#paginaContenedorGrupos").page().transition("misGruposLista", "slide-in-from-left");
  		})
  		
  		// Para las pestañas de la barra
         $('.md-tabs').slick({
             centerPadding: '60px',
-            slidesToShow: 5,
+            slidesToShow: 4,
             infinite: false,
             centerMode: false,
             responsive: [
@@ -1097,7 +1081,7 @@
                     settings: {
                         arrows: false,
                         centerPadding: '40px',
-                        slidesToShow: 4.4
+                        slidesToShow: 3.4
                     }
                 },
                 {
@@ -1105,42 +1089,20 @@
                     settings: {
                         arrows: false,
                         centerPadding: '40px',
-                        slidesToShow: 3.4,
+                        slidesToShow: 2.4,
                         dots: false
                     }
                 }
             ]
         });
-
-
-        // Para manejar las pestañas
-        function all(css, element) {
-            element = element || document;
-            return [].slice.call(element.querySelectorAll(css));
-        }
-
-        let listItems = all('.md-tabs li');
-
-        listItems.forEach((li, i) => {
-            $('#content-tab1').show();
-            $('#content-tab' + (i + 1)).hide();
-
-            all('a', li).forEach(a => {
-                a.addEventListener('click', () => {
-                    listItems.forEach((li, i) => {
-
-                        li.classList.remove('active');
-                        $('#content-tab' + (i + 1)).hide();
-                    })
-                    $('#content-tab' + (i + 1)).show();
-                    li.classList.add('active');
-                });
-            });
-        });
-
- //funciones de los graficos - resultados
+		
+ 	// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
+		
+		// PESTAÑA 4 - RESULTADOS //
+ 		
+		//funciones de los graficos - resultados
  
- fetch('http://localhost:8080/TeApuestoRest/api/get/evento/obtenerPuntosPorEvento')
+ 		fetch('http://localhost:8080/TeApuestoRest/api/get/evento/obtenerPuntosPorEvento')
         .then((respuesta) => {
             return respuesta.json();
         }).then((respuesta) => {
@@ -1156,7 +1118,6 @@
                 puntos[i] = puntajes[i].puntos;
 
             }
-
 
 
             //Global Options
@@ -1204,13 +1165,41 @@
 
         });
  
- 
- // +++++++++++++++++++++++++++++++++++++
+
+		// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
+		
+		// SLICK - MANEJO DE PESTAÑAS //
+		
+        // Para manejar las pestañas
+        function all(css, element) {
+            element = element || document;
+            return [].slice.call(element.querySelectorAll(css));
+        }
+
+        let listItems = all('.md-tabs li');
+
+        listItems.forEach((li, i) => {
+            $('#content-tab1').show();
+            $('#content-tab' + (i + 1)).hide();
+
+            all('a', li).forEach(a => {
+                a.addEventListener('click', () => {
+                    listItems.forEach((li, i) => {
+
+                        li.classList.remove('active');
+                        $('#content-tab' + (i + 1)).hide();
+                    })
+                    $('#content-tab' + (i + 1)).show();
+                    li.classList.add('active');
+                });
+            });
+        });
+
         
         
-        
-        
- // Para las galletas
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
+		
+		// LAS GALLETAS //
 
         function guardarGalleta(name,value,days) {
             var expires = "";
@@ -1237,14 +1226,7 @@
         }
 
         
-        
-        
-        
-          
-        
-        
-
-    </script>
+        </script>
 </body>
 
 </html>
