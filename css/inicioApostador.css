@@ -471,6 +471,24 @@ section h1 {
   text-align: center;
 }
 
+/*El modal de los grupos generales*/
+
+ .labelModalUnirseGrupo {
+    width: 100px;
+    padding: 5px;
+	height: 37px;
+	border: 1px solid black;	
+   
+}
+ 
+.inputModalUnirseGrupo {
+   width: 100px;	
+	padding: 5px;
+	border: 1px solid black;
+	
+}
+
+
 /*Media queries*/
 @media(max-width: 992px){
     #input-busqueda-apuesta{
