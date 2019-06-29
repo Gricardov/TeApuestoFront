@@ -631,9 +631,8 @@
 				</div>
 				<div class="modal-body" id="cuerpoModalInsertarPrediccion"></div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary"
-						data-dismiss="modal">Listo</button>
-					
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Listo</button>
+
 				</div>
 			</div>
 
@@ -653,8 +652,8 @@
 
 				<!-- Modal body -->
 				<div class="modal-body" id="cuerpo-modal">
-	
-	<!-- 
+
+					<!-- 
 					<form action="/">
 
 
@@ -682,13 +681,13 @@
 					</form>
 					
 					-->
-					
+
 					<div id="divMensaje"></div>
 				</div>
 				<!-- Modal footer -->
 				<div class="modal-footer">
-					<button id="btnUnirseGrupo" type="button" class="btn btn-primary">
-						Unirse</button>
+					<button id="btnConfirmarUnirseGrupo" type="button"
+						class="btn btn-primary">Confirmar</button>
 				</div>
 
 			</div>
@@ -713,9 +712,10 @@
 		// Primero, mostrar los datos del usuario
 		let usuario = JSON.parse(obtenerGalleta("usuario"));
 
-		// Aquí se va a guardar el código de grupo de usuario que uno haya seleccionado
+		// Aquí se va a guardar el código de grupo de usuario que uno haya seleccionado, para unirse recién o entrar a su chat
 		let idGrupoSeleccionado = null;
-
+		let idUnirseGrupoSeleccionado=null;
+		
 		if (usuario) {
 
 
@@ -806,9 +806,9 @@
 			
 														<div class="col-6 text-center">
 
-															<i class="fa fa-door-open"></i> <a href="#" id="btnUnirseGrupoModal" data-toggle="modal"
-																data-target="#modalUnirseGrupo" data-grupo=${data[i].id}
-																class="txt-mayuscula">Entrar</a>
+															<i class="fa fa-door-open"></i> <a href="#" class="btnUnirseGrupoModal" data-toggle="modal"
+																data-grupo=${data[i].id}
+																class="txt-mayuscula">UNIRME</a>
 														</div>
 													</div>
 												</div>
@@ -836,8 +836,60 @@
 			}
 
 			cargarGruposGeneral()
+			
+			// Para establecer el idUnirseGrupoSeleccionado
+			$('#contenedorGruposGeneral').on('click', '.btnUnirseGrupoModal', function () {
+			//mostrarAnimacionCargando();
+			var idGrupo = $(this).attr("data-grupo");
+			idUnirseGrupoSeleccionado=idGrupo;
+			$('#modalUnirseGrupo').modal();
+			
+			alert(idUnirseGrupoSeleccionado)
+			
+			//mostrarDetalleGrupo(idGrupo);
 
 
+		});
+		// Para confirmar la unión a un grupo
+			$('#btnConfirmarUnirseGrupo').click(function(){
+				mostrarAnimacionCargando();
+				unirseAGrupo();
+			})
+			
+			function unirseAGrupo(){
+				$.ajax({
+					type: 'POST',
+					headers: { 'Access-Control-Allow-Origin': '*' },
+					url: 'http://localhost:8080/TeApuestoRest/api/post/grupoApuesta/unirseGrupoApuesta',
+					dataType: 'json',
+					contentType: 'application/json',
+					data: JSON.stringify({
+						"codUsu": usuario.codigo,
+						"idGrupoApuesta": idUnirseGrupoSeleccionado,
+						"monto": 1000
+
+					}),
+					success: function (data) {
+
+						if (data) {
+							ocultarAnimacionCargando();
+							
+							// Ahora debo recargar la pestaña de mis grupos
+
+
+
+						}
+					},
+					error: function (data) {
+						ocultarAnimacionCargando();
+						mostrarModalPrediccionesVersus();
+						alert(JSON.stringify(data));
+					}
+
+
+				});
+		}
+			
 			// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
 
 			// PESTAÑA 3 - GRUPOS //
