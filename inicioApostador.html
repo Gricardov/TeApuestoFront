@@ -653,6 +653,60 @@
 		</div>
 	</div>
 
+<!-- modal Para Ingresar Las predicciones -->
+<div class="modal fade" id="modalInsertarPrediccionGruposGeneral">
+		<div class="modal-dialog modal-lg" >
+			<div class="modal-content"  >
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Costo Para Unirse al Grupo S/.50.00 </h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body" id="cuerpo-modal" >
+
+					<form action="/">		
+						
+			         	
+			         	<div class="form-group"   >	
+			         	<img class="card-img" src="images/peru.jpg">					
+							<label class="labelModalUnirseGrupo">Peru</label> <input type="number"
+								class="inputModalUnirseGrupo" id="PrediccionPeru" min="0"   />
+								 <label >VS</label>
+								 <img class="card-img" src="images/brazil.jpg">
+						    <label class="labelModalUnirseGrupo">Brazil</label> <input type="number"
+								class="inputModalUnirseGrupo" id="PrediccionBrazil" min="0"  />
+						</div>
+						
+						<div class="form-group" ">
+							<img class="card-img" src="images/argentina.jpg">
+							<label class="labelModalUnirseGrupo">Argentina</label> <input
+							class="inputModalUnirseGrupo"	type="number"  id="PrediccionArgentina" min="0"  >
+							 <label >VS</label>
+							 	<img class="card-img" src="images/colombia.jpg">
+								<label class="labelModalUnirseGrupo">Colombia</label> <input
+							class="inputModalUnirseGrupo"	type="number"  id="PrediccionColombia" min="0"  >
+						</div>
+						
+					</form>
+					<div id="divMensaje"></div>
+				</div>
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button id="btnIngresarGrupo" type="button" class="btn btn-primary">
+						Unirse</a>
+
+						
+				</div>
+
+			</div>
+		</div>
+	</div>
+<!-- End Modal Predicciones -->
+
+
 
 	<!-- jQuery, Bootstrap JS. -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -761,7 +815,8 @@
 			
 														<div class="col-6 text-center">
 
-															<i class="fa fa-door-open"></i> <a href="#" id="btnEntrar" data-grupo=${data[i].id}
+															<i class="fa fa-door-open"></i> <a href="#" id="btnEntrarModal" data-toggle="modal"
+																data-target="#modalInsertarPrediccionGruposGeneral" data-grupo=${data[i].id}
 																class="txt-mayuscula">Entrar</a>
 														</div>
 													</div>
