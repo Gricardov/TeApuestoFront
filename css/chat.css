@@ -294,6 +294,7 @@
 }
 
 .message {
+  max-height: 500px;
   padding: 0 !important;
   margin: 0 !important;
   background: url("w.jpg") no-repeat fixed center;
