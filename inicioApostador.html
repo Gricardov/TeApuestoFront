@@ -1348,18 +1348,11 @@
 				var nombres = [];
 
 				for (i = 0; i <= puntajes.length - 1; i++) {
-					//document.write(puntajes[i].nombre + " " + puntajes[i].puntos + "<br>")
+
 					nombres[i] = puntajes[i].nombre;
 					puntos[i] = puntajes[i].puntos;
 
 				}
-
-
-				//Global Options
-				//Chart.defaults.global.defaultFontFamily= 'Lato';
-				//Chart.defaults.global.defaultFontSize= 18;
-				Chart.defaults.global.defaultFontColor = '#777';
-
 
 				var grafica = document.getElementById('myChart').getContext('2d');
 				var myChart = new Chart(grafica, {
@@ -1370,13 +1363,13 @@
 							label: 'Puntajes',
 							data: puntos,//[7,6,5,4,3,2,2],
 							backgroundColor: [
-								'#33FFD8',
-								'#33FFD8',
-								'#33FFD8',
-								'#33FFD8',
-								'#33FFD8',
-								'#33FFD8',
-								'#33FFD8',
+								'#FF4A70',
+								'#FF4A70',
+								'#FF4A70',
+								'#FF4A70',
+								'#FF4A70',
+								'#FF4A70',
+								'#FF4A70',
 							],
 							borderWidth: 1,
 							borderColor: '#A2FFED',
