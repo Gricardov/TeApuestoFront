@@ -145,7 +145,7 @@
 							</div>
 
 							<div id="contenedorEventos"></div>
-							
+
 							<div class="row justify-content-center">
 								<div class="col-md-4">
 									<div class="featured-btn-wrap">
@@ -290,31 +290,7 @@
 								</div>
 								<div class="card-title col-12 col-md-11 mt-2">
 
-									<div class="card">
-										<!-- INICIO DE GRAFICO DE BARRAS -->
-										<div id='resultadosApuestas'>
-											<div class="row">
-												<div class="col-12 col-md-10" margin>
-													<h2 class="ajuste"> Top de Ganadores</h2>
-													<canvas id="myChart"></canvas>
-													<hr>
-												</div>
-											</div>
-										</div>
-										<!--  FIN DE GRAFICO DE BARRAS -->
-										
-									
-										<ul class="list-inline">
-											<li class="ajuste">Apuestas Ganadas:</li>
-											<br>
-
-											<li class="ajuste">Dinero Obtenido:</li>
-											<br>
-											<li class="ajuste">% de Aciertos:</li>
-											<br>
-											<li class="ajuste">Ultima Apuesta ganada:</li>
-										</ul>
-									</div>
+									<div id="contenedorResultados"></div>
 								</div>
 							</div>
 
@@ -706,6 +682,10 @@
 					}
 				});
 		}
+		
+		function MostrarVersusPorGrupo(){
+			
+		}
 			
 			// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
 			// PESTAÑA 3 - GRUPOS //
@@ -796,6 +776,81 @@
 					alert(JSON.stringify(data));
 				}
 			});
+			
+			
+			// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
+			// PESTAÑA 4 - RESULTADOS //
+			// Primero, coloco los datos en la barra superior
+			$('#linkDatosUsuario').text(usuario.nombre + " " + usuario.apPaterno);
+			$('#contenedorResultados').empty();
+			$.ajax({
+				type: 'POST',
+				headers: { 'Access-Control-Allow-Origin': '*' },
+				url: 'http://localhost:8080/TeApuestoRest/api/post/grupoApuesta/obtenerGruposApuestaPorUsuario',
+				dataType: 'json',
+				contentType: 'application/json',
+				data: JSON.stringify({
+					"codigo": usuario.codigo
+				}),
+				success: function (data) {
+					if (data) {
+						for (var i = 0; i < data.length; i++) {
+							
+							var tipoPrivacidad = "";
+							if (data[i].tipo.id == 1) {
+								tipoPrivacidad = `<i class="fa fa-globe"></i>${data[i].tipo.descripcion}`
+							} else {
+								tipoPrivacidad = `<i class="fa fa-lock"></i>${data[i].tipo.descripcion}`
+							}
+							$("#contenedorResultados").append(`
+                    			<div class="row">
+									<div class="col-12">
+										<div class="card">
+											
+										
+											<!-- INICIO DE GRAFICO DE BARRAS -->
+											<div id='resultadosApuestas'>
+												<div class="row">
+													<div class="col-12 col-md-10" margin>
+														<h2 class="ajuste"> Top del Grupo:</h2>
+														<h4 class="ajuste">
+														${data[i].nombre}
+														</h4>
+														<canvas id=${data[i].id}></canvas>
+														<hr>
+													</div>
+												</div>
+											</div>
+											<!--  FIN DE GRAFICO DE BARRAS -->
+										
+											<ul class="list-inline">
+												<li class="ajuste">Detalle de Apuestas:</li>
+												<br>
+	
+											</ul>
+											<div id='detalleApuestas'+${data[i].id}></div>
+
+											
+										</div>
+									</div>
+								</div>
+                    				`);
+						}
+						
+						// funcion para traer el detalle de las apuetas
+						detalleApuestas(usuario.codigo, data[i].id)
+						
+					} else {
+						$("#contenedorResultados").append("<div class='alert alert-danger' role='alert'>No se pudo obtener datos</div>")
+					}
+				},
+				error: function (data) {
+					alert(JSON.stringify(data));
+				}
+				
+			});
+			
+			
 		}
 		// Cuando se haga click en el botón de entrar, que se pidan los detalles del grupo
 		$('#contenedorGrupos').on('click', 'a', function () {
@@ -1062,54 +1117,280 @@
 		
 		// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
 		// PESTAÑA 4 - RESULTADOS //
-		//funciones de los graficos - resultados
-		fetch('http://localhost:8080/TeApuestoRest/api/get/evento/obtenerPuntosPorEvento')
-			.then((respuesta) => {
-				return respuesta.json();
-			}).then((respuesta) => {
-				var puntajes = [];
-				puntajes = respuesta;
-				var puntos = [];
-				var nombres = [];
-				for (i = 0; i <= puntajes.length - 1; i++) {
-					nombres[i] = puntajes[i].nombre;
-					puntos[i] = puntajes[i].puntos;
+		function detalleApuestas(idUsu, idGrupoApu){
+			$.ajax({
+				type: 'POST',
+				headers: { 'Access-Control-Allow-Origin': '*' },
+				url: 'http://localhost:8080/TeApuestoRest/api/post/evento/obtenerDetallePuntos',
+				dataType: 'json',
+				contentType: 'application/json',
+				data: JSON.stringify({
+					"codUsu":idUsu,
+					"idGrupoApuesta":idGrupoApu,
+					"idVersus":"",
+					"idEvento":"1"
+				}),
+				
+				success: function (data) {
+					$("#detalleApuestas").append(`
+						<table class="table table-hover" >
+							<th>Versus</th>
+							<th>Equipo 1</th>
+							<th>Equipo 2</th>
+							<th>Goles Reales Eq1</th>
+							<th>Goles Reales Eq2</th>
+							<th>Goles Predic Eq1</th>
+							<th>Goles Predic Eq2</th>
+							<th>Puntos Ganados</th>
+							<tr>
+								<td>${data[i].versus}</td>
+								<td>${data[i].golesRealesEq1}</td>
+							</tr>
+						</table>
+					`);
+				},
+				error: function (data) {
+					alert(JSON.stringify(data));
 				}
-				var grafica = document.getElementById('myChart').getContext('2d');
-				var myChart = new Chart(grafica, {
-					type: 'horizontalBar',
-					data: {
-						labels: nombres,//['Anthony', 'Raquel', 'Isaac', 'Aurora', 'Luis', 'Yamile', 'Cardy'],
-						datasets: [{
-							label: 'Puntajes',
-							data: puntos,//[7,6,5,4,3,2,2],
-							backgroundColor: [
-								'#FF4A70',
-								'#FF4A70',
-								'#FF4A70',
-								'#FF4A70',
-								'#FF4A70',
-								'#FF4A70',
-								'#FF4A70',
-							],
-							borderWidth: 1,
-							borderColor: '#A2FFED',
-							hoverBorderWidth: 2,
-							hoverBorderColor: '#03BC99',
-						}]
-					},
-					options: {
-						responsive: true,
-						scales: {
-							xAxes: [{
-								ticks: {
-									beginAtZero: true
-								}
-							}]
-						}
-					}
-				});
 			});
+		}
+		
+		
+		
+		
+	    //funciones de los graficos - resultados
+	    
+	    // ----- INICIO GRAFICO 1 ---- //
+        	fetch('http://localhost:8080/TeApuestoRest/api/get/evento/obtenerPuntosPorEvento/1001')
+            .then((respuesta) => {
+                return respuesta.json();
+            }).then((respuesta) => {
+
+                var puntajes = [];
+                puntajes = respuesta;
+                var puntos = [];
+                var nombres = [];
+                var colores = [];
+                for (i = 0; i <= puntajes.length - 1; i++) {
+                    nombres[i] = puntajes[i].nombre;
+                    puntos[i] = puntajes[i].puntos;
+                    colores[i]= '#FF4A70';
+                }
+                var grafica = document.getElementById('1001').getContext('2d');
+                var myChart = new Chart(grafica,
+                    {
+                        type: 'horizontalBar',
+                        data: {
+                            labels: nombres,//['Anthony', 'Raquel', 'Isaac', 'Aurora', 'Luis', 'Yamile', 'Cardy'],
+                            datasets: [{
+                                label: 'Puntajes',
+                                data: puntos,//[7,6,5,4,3,2,2],
+                                backgroundColor: colores,//['#FF4A70','#FF4A70', '#FF4A70', '#FF4A70', '#FF4A70','#FF4A70','#FF4A70',],
+                                borderWidth: 1,
+                                borderColor: '#A2FFED',
+                                hoverBorderWidth: 2,
+                                hoverBorderColor: '#03BC99',
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                xAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+            });
+     		// ----- FINAL GRAFICO 1 ---- //	
+     		
+     		// ----- INICIO GRAFICO 2 ---- //
+        	fetch('http://localhost:8080/TeApuestoRest/api/get/evento/obtenerPuntosPorEvento/1002')
+            .then((respuesta) => {
+                return respuesta.json();
+            }).then((respuesta) => {
+
+                var puntajes = [];
+                puntajes = respuesta;
+                var puntos = [];
+                var nombres = [];
+                var colores = [];
+                for (i = 0; i <= puntajes.length - 1; i++) {
+                    nombres[i] = puntajes[i].nombre;
+                    puntos[i] = puntajes[i].puntos;
+                    colores[i]= '#17A798';
+                }
+                var grafica = document.getElementById('1002').getContext('2d');
+                var myChart = new Chart(grafica,
+                    {
+                        type: 'horizontalBar',
+                        data: {
+                            labels: nombres,//['Anthony', 'Raquel', 'Isaac', 'Aurora', 'Luis', 'Yamile', 'Cardy'],
+                            datasets: [{
+                                label: 'Puntajes',
+                                data: puntos,//[7,6,5,4,3,2,2],
+                                backgroundColor: colores,//['#FF4A70','#FF4A70', '#FF4A70', '#FF4A70', '#FF4A70','#FF4A70','#FF4A70',],
+                                borderWidth: 1,
+                                borderColor: '#A2FFED',
+                                hoverBorderWidth: 2,
+                                hoverBorderColor: '#03BC99',
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                xAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+            });
+     		// ----- FINAL GRAFICO 2 ---- //
+     		
+     		// ----- INICIO GRAFICO 3 ---- //
+        	fetch('http://localhost:8080/TeApuestoRest/api/get/evento/obtenerPuntosPorEvento/1003')
+            .then((respuesta) => {
+                return respuesta.json();
+            }).then((respuesta) => {
+
+                var puntajes = [];
+                puntajes = respuesta;
+                var puntos = [];
+                var nombres = [];
+                var colores = [];
+                for (i = 0; i <= puntajes.length - 1; i++) {
+                    nombres[i] = puntajes[i].nombre;
+                    puntos[i] = puntajes[i].puntos;
+                    colores[i]= '#437DFE';//AC80F8, 437DFE
+                }
+                var grafica = document.getElementById('1003').getContext('2d');
+                var myChart = new Chart(grafica,
+                    {
+                        type: 'horizontalBar',
+                        data: {
+                            labels: nombres,//['Anthony', 'Raquel', 'Isaac', 'Aurora', 'Luis', 'Yamile', 'Cardy'],
+                            datasets: [{
+                                label: 'Puntajes',
+                                data: puntos,//[7,6,5,4,3,2,2],
+                                backgroundColor: colores,//['#FF4A70','#FF4A70', '#FF4A70', '#FF4A70', '#FF4A70','#FF4A70','#FF4A70',],
+                                borderWidth: 1,
+                                borderColor: '#A2FFED',//
+                                hoverBorderWidth: 2,
+                                hoverBorderColor: '#03BC99',
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                xAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+            });
+     		// ----- FINAL GRAFICO 3 ---- //
+		
+
+     		// ----- INICIO GRAFICO 4 ---- //
+        	fetch('http://localhost:8080/TeApuestoRest/api/get/evento/obtenerPuntosPorEvento/1004')
+            .then((respuesta) => {
+                return respuesta.json();
+            }).then((respuesta) => {
+
+                var puntajes = [];
+                puntajes = respuesta;
+                var puntos = [];
+                var nombres = [];
+                var colores = [];
+                for (i = 0; i <= puntajes.length - 1; i++) {
+                    nombres[i] = puntajes[i].nombre;
+                    puntos[i] = puntajes[i].puntos;
+                    colores[i]= '#AC80F8';
+                }
+                var grafica = document.getElementById('1004').getContext('2d');
+                var myChart = new Chart(grafica,
+                    {
+                        type: 'horizontalBar',
+                        data: {
+                            labels: nombres,//['Anthony', 'Raquel', 'Isaac', 'Aurora', 'Luis', 'Yamile', 'Cardy'],
+                            datasets: [{
+                                label: 'Puntajes',
+                                data: puntos,//[7,6,5,4,3,2,2],
+                                backgroundColor: colores,//['#FF4A70','#FF4A70', '#FF4A70', '#FF4A70', '#FF4A70','#FF4A70','#FF4A70',],
+                                borderWidth: 1,
+                                borderColor: '#A2FFED',
+                                hoverBorderWidth: 2,
+                                hoverBorderColor: '#03BC99',
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                xAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+            });
+     		// ----- FINAL GRAFICO 4 ---- //     		
+		
+     		// ----- INICIO GRAFICO 5 ---- //
+        	fetch('http://localhost:8080/TeApuestoRest/api/get/evento/obtenerPuntosPorEvento/1005')
+            .then((respuesta) => {
+                return respuesta.json();
+            }).then((respuesta) => {
+
+                var puntajes = [];
+                puntajes = respuesta;
+                var puntos = [];
+                var nombres = [];
+                var colores = [];
+                for (i = 0; i <= puntajes.length - 1; i++) {
+                    nombres[i] = puntajes[i].nombre;
+                    puntos[i] = puntajes[i].puntos;
+                    colores[i]= '#F9A131';
+                }
+                var grafica = document.getElementById('1005').getContext('2d');
+                var myChart = new Chart(grafica,
+                    {
+                        type: 'horizontalBar',
+                        data: {
+                            labels: nombres,//['Anthony', 'Raquel', 'Isaac', 'Aurora', 'Luis', 'Yamile', 'Cardy'],
+                            datasets: [{
+                                label: 'Puntajes',
+                                data: puntos,//[7,6,5,4,3,2,2],
+                                backgroundColor: colores,//['#FF4A70','#FF4A70', '#FF4A70', '#FF4A70', '#FF4A70','#FF4A70','#FF4A70',],
+                                borderWidth: 1,
+                                borderColor: '#A2FFED',
+                                hoverBorderWidth: 2,
+                                hoverBorderColor: '#03BC99',
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                xAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+            });
+     		// ----- FINAL GRAFICO 5 ---- //
+		
 		// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
 		// FUNCIONES VARIAS //
 	function mostrarAnimacionCargando(){
