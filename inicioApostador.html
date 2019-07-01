@@ -125,6 +125,11 @@
 				<div class="col-md-12">
 					<div class="tab-content">
 						<div id="content-tab1">
+	
+	<!-- Página contenedor es para que ocurra una transición -->
+							<div id="paginaContenedorEventos">
+								<div>
+									<div class="page" data-jquery-page-name="eventosLista">
 
 							<div class="row align-items-center mb-5">
 								<div class="col-12 col-md-6">
@@ -143,7 +148,6 @@
 									</div>
 								</div>
 							</div>
-
 							<div id="contenedorEventos"></div>
 
 							<div class="row justify-content-center">
@@ -154,6 +158,20 @@
 								</div>
 							</div>
 						</div>
+						
+						<div id="contenedorFixtures" class="page"
+										data-jquery-page-name="fixturesLista">
+						
+						
+						
+						</div>
+						
+						
+						</div>
+						</div>
+						
+						
+						
 						<div id="content-tab2">
 
 
@@ -186,6 +204,7 @@
 							<div id="paginaContenedorGrupos">
 								<div>
 									<div class="page" data-jquery-page-name="misGruposLista">
+
 
 										<div class="row align-items-center mb-5">
 											<div class="col-6 col-md-4">
@@ -424,6 +443,8 @@
 	<script>
 		// Cargo el deslizador de página
 		$("#paginaContenedorGrupos").page();
+		$("#paginaContenedorEventos").page();
+		
 		// Primero, mostrar los datos del usuario
 		let usuario = JSON.parse(obtenerGalleta("usuario"));
 		// Aquí se va a guardar el código de grupo de usuario que uno haya seleccionado, para unirse recién o entrar a su chat
